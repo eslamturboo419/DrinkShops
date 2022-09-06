@@ -1,0 +1,38 @@
+﻿@*@model WebApplication1.Models.VM.DrinkVM
+*@
+@model IEnumerable< WebApplication1.Models.Drink>
+
+
+@{
+    ViewData["Title"] = "List";
+}
+
+
+@*@await Html.PartialAsync("_Carousel")*@
+
+@*<h2> @Model.CurrentCategory </h2>*@
+<h2> @ViewBag.Current </h2>
+ 
+<div class="row">
+
+@foreach (var item in Model@*Drinks*@)
+{
+
+<div class="col-md-4">
+<div class="card " style="width: 18rem; padding: 15px; margin-bottom: 30px;" >
+  <img class="card-img-top img-thumbnail" src="~/Images/@item.ImgThumbilUrl" alt="">
+  <div class="card-body">
+    <h5 class="card-title">@item.Name  <span class="text-right" >( @item.Price.ToString("c") ) </span> </h5>
+    <p class="card-text">@item.ShortDescription</p>
+   
+    <a asp-action="AddToShoppingCart" asp-controller="ShoppingCart" asp-route-drinkId="@item.DrinkId" class="btn btn-primary" >
+        Add To Cart
+    </a>
+
+  </div>
+</div>
+</div>
+ 
+}
+
+</div>
