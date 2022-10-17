@@ -21,7 +21,9 @@ namespace WebApplication1.Controllers
             this.categoryRepostory = categoryRepostory;
         }
 
-        public IActionResult List(string category)
+        // try to use async Task<IActionResult> coz it's better performance on production
+        // and will make ur api can proses more requests
+        public IActionResult List(string category)// ToDo you need to change this to accept the enum instead coz developer can make a typo which will break the work flow
         {
 
             string _category = category;
@@ -36,9 +38,9 @@ namespace WebApplication1.Controllers
             else
             {
                 if (string.Equals("Alcoholic", _category, StringComparison.OrdinalIgnoreCase))
-                    drinks = drinkRepostory.drinks.Where(p => p.Category.CategoryName.Equals("Alcoholic")).OrderBy(p => p.Name);
+                    drinks = drinkRepostory.ByType(DrinkType.Alcoholic); // the old code was getting all rows from the DB then appling the condetions in the memory 
                 else
-                    drinks = drinkRepostory.drinks.Where(p => p.Category.CategoryName.Equals("Non-alcoholic")).OrderBy(p => p.Name);
+                    drinks = drinkRepostory.drinks.ByType(DrinkType.NonAlcoholic);
 
                 currentCategory = _category;
             }

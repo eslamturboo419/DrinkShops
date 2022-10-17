@@ -15,6 +15,7 @@ namespace WebApplication1.Models.ImplementInterfaces
         }
 
         public IEnumerable<Drink> drinks => db.Drinks.Include(x=>x.Category);
+        public IEnumerable<Drink> ByType(DrinkType drinkType) => db.Drinks.Include(x=>x.Category).Where(p => p.Category.CategoryName == drinkType.ToString()).OrderBy(p => p.Name);
 
         public IEnumerable<Drink> PrefereDrinks =>  db.Drinks.Where(x=>x.IsPreferDrink).Include(x=>x.Category);
 
@@ -22,5 +23,9 @@ namespace WebApplication1.Models.ImplementInterfaces
         {
             return db.Drinks.Where(x => x.DrinkId == DrinkId).FirstOrDefault();
         }
+    }
+    public enum DrinkType{
+        Alcoholic,
+        NonAlcoholic
     }
 }
